@@ -44,11 +44,33 @@ function matches(row) {
     if (!v) continue;
     const key = field === "dimension" ? "n" : field;
     if (["dimension", "steps", "chains", "seed"].includes(field)) {
-      if (!present(row[key]) || Number(row[key]) !== Number(v)) return false;
+      if (v === "__missing__") {
+        if (present(row[key])) return false;
+      } else if (!present(row[key]) || Number(row[key]) !== Number(v)) return false;
     } else if (String(row[key]) !== v) return false;
   }
   return true;
 }
+function populateRecordedValues() {
+  for (const [control, field] of [["dimension", "n"], ["steps", "steps"], ["chains", "chains"], ["seed", "seed"]]) {
+    const select = byId(control);
+    const available = [...new Set(records.map(r => r[field]).filter(present))].sort((a,b) => a-b);
+    select.querySelectorAll("option:not(:first-child)").forEach(o => o.remove());
+    for (const value of available) {
+      const option = document.createElement("option");
+      option.value = String(value);
+      option.textContent = control === "dimension" ? "n = " + value : Number(value).toLocaleString("en-US");
+      select.appendChild(option);
+    }
+    if (records.some(r => !present(r[field]))) {
+      const option = document.createElement("option");
+      option.value = "__missing__";
+      option.textContent = "Not recorded in source";
+      select.appendChild(option);
+    }
+  }
+}
+
 function render() {
   filtered = records.filter(matches);
   const body = byId("rows");
@@ -57,7 +79,7 @@ function render() {
   byId("download").disabled = filtered.length === 0;
   if (!filtered.length) {
     const tr = document.createElement("tr");
-    cell(tr, "No matching observations. Clear some filters or try a documented dimension.", "muted").colSpan = 10;
+    cell(tr, "No saved experiments match this combination. Change a filter, clear all filters, or run a new browser experiment above.", "muted").colSpan = 10;
     body.appendChild(tr);
     return;
   }
@@ -132,6 +154,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     byId("stat-records").textContent = numeric(records.length, 0);
     const dimensions = [...new Set(records.map(r => r.n))].sort((a, b) => a - b);
     byId("stat-dimensions").textContent = dimensions.length.toLocaleString();
+    populateRecordedValues();
     render();
   } catch (err) {
     byId("count").textContent = "Unable to load the public index. Please check the Pages deployment.";
