@@ -5,39 +5,39 @@ I have added a deliberately small numerical companion to my separate [Mixed Volu
 ## Geometry and exact calculation
 
 **This demonstration uses a different cube from the random-walk study.** Here
-\[
+$
 P=[-1,1]^n,\quad Q_\lambda=P+\lambda B_2^n,
-\]
-whereas the Random Walks study uses the side-length-1 cube \([-\tfrac12,\tfrac12]^n\). For this cube and Euclidean ball, the Steiner polynomial is
-\[
+$
+whereas the Random Walks study uses the side-length-1 cube $[-\tfrac12,\tfrac12]^n$. For this cube and Euclidean ball, the Steiner polynomial is
+$
 \operatorname{Vol}(Q_\lambda)=\sum_{j=0}^{n}\binom{n}{j}M_j\lambda^j,\quad
 M_j=2^{n-j}\kappa_j,\quad
 \kappa_j=\operatorname{Vol}(B_2^j).
-\]
+$
 
-To reproduce \(\kappa_j\) without dependencies, the code uses \(\kappa_0=1\), \(\kappa_1=2\), and \(\kappa_j=2\pi\,\kappa_{j-2}/j\) for \(j\geq2\). These are exact geometric references, not outputs of a simulation.
+To reproduce $\kappa_j$ without dependencies, the code uses $\kappa_0=1$, $\kappa_1=2$, and $\kappa_j=2\pi\,\kappa_{j-2}/j$ for $j\geq2$. These are exact geometric references, not outputs of a simulation.
 
 ## What the browser actually estimates
 
-It draws \(N\) **independent** points uniformly from the enclosing box
-\[
+It draws $N$ **independent** points uniformly from the enclosing box
+$
 E_\lambda=[-1-\lambda,1+\lambda]^n.
-\]
-Clipping each coordinate to \([-1,1]\) gives the Euclidean projection \(\Pi_P(x)\). I accept a sampled point when
-\[
+$
+Clipping each coordinate to $[-1,1]$ gives the Euclidean projection $\Pi_P(x)$. I accept a sampled point when
+$
 \|x-\Pi_P(x)\|_2\leq\lambda.
-\]
+$
 
-For an accepted point the component label \(j\) is the number of coordinates with \(|x_i|>1\). This partitions \(Q_\lambda\) up to measure-zero boundaries. Let \(N_{\mathrm{in}}\) count all accepted points and \(N_k\) count accepted points assigned to label \(k\). The two independent-draw Monte Carlo estimators are
-\[
+For an accepted point the component label $j$ is the number of coordinates with $|x_i|>1$. This partitions $Q_\lambda$ up to measure-zero boundaries. Let $N_{\mathrm{in}}$ count all accepted points and $N_k$ count accepted points assigned to label $k$. The two independent-draw Monte Carlo estimators are
+$
 \widehat{\operatorname{Vol}(Q_\lambda)}
 =(2+2\lambda)^n\frac{N_{\mathrm{in}}}{N},\qquad
 \widehat M_k=\frac{(2+2\lambda)^n(N_k/N)}
   {\binom nk\lambda^k}.
-\]
-The conditional sampled component probability is \(N_k/N_{\mathrm{in}}\) when \(N_{\mathrm{in}}>0\), compared against the exact probability \(\binom nkM_k\lambda^k/\operatorname{Vol}(Q_\lambda)\).
+$
+The conditional sampled component probability is $N_k/N_{\mathrm{in}}$ when $N_{\mathrm{in}}>0$, compared against the exact probability $\binom nkM_k\lambda^k/\operatorname{Vol}(Q_\lambda)$.
 
-The interface calculates an approximate **Wilson binomial interval** for the unconditional probabilities \(N_{\mathrm{in}}/N\) and \(N_k/N\), then rescales the endpoints to body volume and \(M_k\). This captures simple independent-sample uncertainty, but it is only an approximate interval and rare target components can yield zero hits even when \(M_k>0\). The estimator can become computationally inefficient as dimension or scaling changes. Limits \(1\leq n\leq6\), \(0.1\leq\lambda\leq2\), and \(1000\leq N\leq50000\) constrain browser work; they do not limit the mathematical framework.
+The interface calculates an approximate **Wilson binomial interval** for the unconditional probabilities $N_{\mathrm{in}}/N$ and $N_k/N$, then rescales the endpoints to body volume and $M_k$. This captures simple independent-sample uncertainty, but it is only an approximate interval and rare target components can yield zero hits even when $M_k>0$. The estimator can become computationally inefficient as dimension or scaling changes. Limits $1\leq n\leq6$, $0.1\leq\lambda\leq2$, and $1000\leq N\leq50000$ constrain browser work; they do not limit the mathematical framework.
 
 ## Relationship to the original mixed-volume research
 
