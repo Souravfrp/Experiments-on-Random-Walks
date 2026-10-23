@@ -1,0 +1,6 @@
+walk,n,exact_coordinate_tv_10pct_steps,python_proxy_steps,cpp_proxy_steps,python_us_per_step,cpp_us_per_step
+ball,20,,128,128,0.353,0.126
+dikin,20,,1024,1024,0.765,0.266
+coordinate_hit_run,20,103,64,64,0.015,0.006
+random_hit_run,20,,32,32,0.466,0.139
+john,20,,2048,2048,0.753,0.206

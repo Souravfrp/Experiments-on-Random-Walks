@@ -1,0 +1,26 @@
+# Fresh experiments can become large; keep only selected numerical summaries in Git.
+runs/*
+!runs/.gitkeep
+runs_baseline/*
+!runs_baseline/.gitkeep
+study_runs/*
+!study_runs/.gitkeep
+# Compiled binaries, build objects and native caches
+cpp/random_walks_optimized
+baseline/cpp/random_walks_baseline
+*.o
+*.a
+*.so
+*.dylib
+*.dSYM/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+# Local environments, OS/editor files
+.venv/
+.env
+.DS_Store
+.vscode/
+.idea/
+# Supplementary large outputs
+*.prof

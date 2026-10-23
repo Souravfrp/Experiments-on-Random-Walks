@@ -1,0 +1,6 @@
+walk,dimension,steps,chains,seed,baseline_python_seconds,optimized_python_seconds,baseline_cpp_seconds,optimized_cpp_four_threads_seconds,source
+ball,20,2560,3000,2026,34.4591,1.0125,1.91061,0.384623,transcribed from user Mac Terminal / Jupyter outputs (2026-10-23)
+dikin,20,2560,3000,2026,76.9352,5.2318,4.26996,0.607405,transcribed from user Mac Terminal / Jupyter outputs (2026-10-23)
+coordinate_hit_run,20,2560,3000,2026,1.708,0.0687,0.125431,0.027906,transcribed from user Mac Terminal / Jupyter outputs (2026-10-23)
+random_hit_run,20,2560,3000,2026,64.1374,1.2887,1.90624,0.399739,transcribed from user Mac Terminal / Jupyter outputs (2026-10-23)
+john,20,2560,3000,2026,52.7716,1.8439,2.43946,0.524032,transcribed from user Mac Terminal / Jupyter outputs (2026-10-23)

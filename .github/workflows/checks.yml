@@ -1,0 +1,22 @@
+name: Mathematical and compilation checks
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numerical dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Run method checks
+        run: python -m unittest discover -s tests -v
+      - name: Compile explicit C++17 implementation
+        run: c++ -std=c++17 -O2 baseline/cpp/walks.cpp -o /tmp/cube_walks_baseline
+      - name: Compile optimized C++17 implementation
+        run: c++ -std=c++17 -O3 -pthread cpp/walks_optimized.cpp -o /tmp/cube_walks_optimized
