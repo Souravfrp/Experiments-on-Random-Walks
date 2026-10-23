@@ -1,6 +1,6 @@
 # Browser demonstration: volume and mixed-volume components of a rounded cube
 
-I have added a deliberately small numerical companion to my separate [Mixed Volume Approximations research](https://github.com/Souravfrp/estimates-of-mixed-volume-components). The new section on the [interactive research website](https://souravfrp.github.io/Experiments-on-Random-Walks/#mixed-volume-lab) lets a visitor enter a dimension, scaling parameter, target component index, independent sample count and random seed. It calculates approximate body volume and one mixed-volume coefficient, draws component-probability comparisons and makes a downloadable CSV.
+I have added a deliberately small numerical companion to my separate [Mixed Volume Approximations research](https://github.com/Souravfrp/estimates-of-mixed-volume-components). The new section on the [interactive research website](https://souravfrp.github.io/Experiments-on-Random-Walks/mixed-volumes.html#mixed-volume-lab) lets a visitor enter a dimension, scaling parameter, target component index, independent sample count and random seed. It calculates approximate body volume and one mixed-volume coefficient, draws component-probability comparisons and makes a downloadable CSV.
 
 ## Geometry and exact calculation
 
