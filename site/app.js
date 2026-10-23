@@ -67,8 +67,11 @@ function render() {
     cell(tr, String(row.n));
     cell(tr, WALK_LABELS[row.walk] || row.walk);
     cell(tr, row.language === "cpp" ? "C++17" : "Python");
-    const stage = cell(tr, row.stage);
-    stage.className = "pill " + row.stage;
+    const stageCell = cell(tr, "");
+    const stageBadge = document.createElement("span");
+    stageBadge.className = "pill " + row.stage;
+    stageBadge.textContent = row.stage;
+    stageCell.appendChild(stageBadge);
     const source = cell(tr, SOURCE_LABELS[row.source] || row.source, "source");
     source.title = row.notes || "";
     cell(tr, numeric(row.checkpoint, 0), present(row.checkpoint) ? "" : "muted");
