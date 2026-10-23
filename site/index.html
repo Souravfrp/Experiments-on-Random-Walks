@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A searchable, source-labelled archive of random walk experiments on the n-dimensional cube.">
+  <title>Experiment archive · Random Walks</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#results">Skip to results</a>
+  <header class="hero">
+    <div class="wrap">
+      <div class="eyebrow">COMPUTATIONAL CONVEX GEOMETRY <span class="dot">·</span> EXPERIMENT ARCHIVE</div>
+      <h1>Experiments on <em>Random Walks</em></h1>
+      <p class="lead">From explicit transition rules to faster Python and C++ implementations. Explore curated evidence across dimensions, numerical diagnostics and execution environments.</p>
+      <div class="hero-actions">
+        <a class="primary" href="https://github.com/Souravfrp/Experiments-on-Random-Walks">View source on GitHub ↗</a>
+        <a class="secondary" href="https://github.com/Souravfrp/Experiments-on-Random-Walks/blob/main/docs/02_MEASUREMENT_AND_LIMITATIONS.md">Measurement protocol ↗</a>
+      </div>
+      <div class="equation">K<sub>n</sub> = [−½, ½]<sup>n</sup> <span>·</span> X<sub>0</sub> = 0 <span>·</span> n ≥ 1</div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="method-note" aria-label="Important interpretation">
+      <strong>How to read these results.</strong> A checkpoint is the second of two consecutive recorded checkpoints passing an empirical marginal/pairwise diagnostic. It is <strong>not</strong> a certified total-variation mixing time. Mac screenshot transcriptions and Linux development examples are different sources; do not pool their runtimes as controlled benchmarks.
+    </section>
+
+    <section class="overview" aria-label="Archive summary">
+      <div class="stat"><span>Indexed observations</span><strong id="stat-records">—</strong></div>
+      <div class="stat"><span>Dimensions covered</span><strong id="stat-dimensions">—</strong></div>
+      <div class="stat"><span>Random walks</span><strong id="stat-walks">5</strong></div>
+      <div class="stat"><span>Research stages</span><strong>2</strong><small>Explicit / optimized</small></div>
+    </section>
+
+    <section id="results" class="results-panel">
+      <div class="section-heading">
+        <div>
+          <div class="eyebrow dark">CURATED HISTORICAL INDEX</div>
+          <h2>Search the experiments</h2>
+          <p>Choose the dimensions and methods of interest. Values labelled unknown are not inferred from incomplete records.</p>
+        </div>
+        <button id="download" class="outline" type="button">Export filtered CSV ↓</button>
+      </div>
+
+      <form id="filters" class="filters" autocomplete="off">
+        <label>Dimension n
+          <input id="dimension" type="number" min="1" step="1" placeholder="Any positive integer">
+        </label>
+        <label>Walk
+          <select id="walk">
+            <option value="">All five walks</option>
+            <option value="ball">Ball Walk</option>
+            <option value="dikin">Dikin Walk</option>
+            <option value="coordinate_hit_run">Coordinate Hit-and-Run</option>
+            <option value="random_hit_run">Random Hit-and-Run</option>
+            <option value="john">John's Walk</option>
+          </select>
+        </label>
+        <label>Language
+          <select id="language"><option value="">Python and C++</option><option value="python">Python</option><option value="cpp">C++</option></select>
+        </label>
+        <label>Implementation
+          <select id="stage"><option value="">Both stages</option><option value="explicit">Explicit</option><option value="optimized">Optimized</option></select>
+        </label>
+        <label>Data source
+          <select id="source"><option value="">All labelled sources</option><option value="mac_dimension_sweep">Mac dimension sweep</option><option value="mac_n20">Mac n=20 timings</option><option value="development_dimension_pilot">Development pilot</option><option value="development_n20">Development n=20</option></select>
+        </label>
+        <label>Step budget
+          <input id="steps" type="number" min="1" step="1" placeholder="Any / unknown">
+        </label>
+        <label>Chains
+          <input id="chains" type="number" min="1" step="1" placeholder="Any / unknown">
+        </label>
+        <label>Seed
+          <input id="seed" type="number" min="0" step="1" placeholder="Any / unknown">
+        </label>
+      </form>
+
+      <div class="bar">
+        <p id="count" role="status" aria-live="polite">Loading indexed experiments…</p>
+        <button type="button" class="text-button" id="clear">Clear filters</button>
+      </div>
+
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Dimension</th><th>Walk</th><th>Language</th><th>Stage</th><th>Source</th><th>Empirical checkpoint</th><th>μs / transition</th><th>Full runtime (s)</th><th>Estimate to checkpoint (s)</th><th>Data</th></tr></thead>
+          <tbody id="rows"><tr><td colspan="10">Loading…</td></tr></tbody>
+        </table>
+      </div>
+      <p class="footnote">Estimated checkpoint cost = checkpoint × chains × (measured/derived μs per transition) / 10⁶. It is shown only when chain count is documented. The estimate excludes diagnostics, charting and saving files.</p>
+    </section>
+
+    <section class="two-cols">
+      <article class="article-card">
+        <div class="eyebrow dark">PROVENANCE</div>
+        <h2>What belongs in one comparison?</h2>
+        <p>Changing hardware, compiler flags, the number of C++ threads, or how random draws are generated changes what a timing comparison means. The archive therefore labels Mac transcriptions separately from development-environment examples. A single seed is not evidence of a confidence interval.</p>
+      </article>
+      <article class="article-card">
+        <div class="eyebrow dark">MATHEMATICAL CONTROL</div>
+        <h2>Coordinate Hit-and-Run</h2>
+        <p>From the origin, the exact total-variation distance equals the probability that at least one coordinate has not yet been updated. For n = 20, its 0.1-TV mixing time is 103 steps. The recorded empirical proxy of 64 steps is <em>not</em> a substitute for that result.</p>
+      </article>
+    </section>
+
+    <section class="submissions">
+      <div>
+        <div class="eyebrow dark">CONTRIBUTING REPRODUCIBLE RESULTS</div>
+        <h2>Extend the experiment history</h2>
+        <p>This is a read-only static archive. New experiments are reviewed before publication. A local run does not automatically upload anything to GitHub. Include source revision, run parameters, acceptance settings, platform, threads and the original numerical summaries with a contribution.</p>
+      </div>
+      <a class="primary dark-button" href="https://github.com/Souravfrp/Experiments-on-Random-Walks/blob/main/CONTRIBUTING.md">Contribution protocol ↗</a>
+    </section>
+  </main>
+  <footer><div class="wrap">Experiments on Random Walks <span>·</span> <a href="https://github.com/Souravfrp/Experiments-on-Random-Walks">Source repository</a> <span>·</span> Reproducibility before rankings</div></footer>
+</body>
+</html>
