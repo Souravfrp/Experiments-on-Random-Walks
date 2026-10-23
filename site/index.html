@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="./style.css">
   <script src="./app.js" defer></script>
   <script src="./playground.js" defer></script>
+  <script src="./mixed_volume.js" defer></script>
 </head>
 <body>
   <a class="skip" href="#results">Skip to results</a>
@@ -19,6 +20,7 @@
       <div class="hero-actions">
         <a class="primary" href="#run-experiment">Run an experiment ↓</a>
         <a class="primary" href="https://github.com/Souravfrp/Experiments-on-Random-Walks">View source on GitHub ↗</a>
+        <a class="secondary" href="#mixed-volume-lab">Mixed Volume Lab ↓</a>
         <a class="secondary" href="https://github.com/Souravfrp/Experiments-on-Random-Walks/blob/main/docs/02_MEASUREMENT_AND_LIMITATIONS.md">Measurement protocol ↗</a>
       </div>
       <div class="equation">K<sub>n</sub> = [−½, ½]<sup>n</sup> <span>·</span> X<sub>0</sub> = 0 <span>·</span> n ≥ 1</div>
@@ -180,6 +182,88 @@
       </div>
       <p class="footnote">Estimated checkpoint cost = checkpoint × chains × (measured/derived μs per transition) / 10⁶. It is shown only when chain count is documented. The estimate excludes diagnostics, charting and saving files.</p>
     </section>
+
+    <section id="mixed-volume-lab" class="results-panel mixed-volume-lab">
+      <div class="section-heading">
+        <div>
+          <div class="eyebrow dark">RELATED RESEARCH · CUBE + EUCLIDEAN BALL</div>
+          <h2>Mixed Volume Approximation Lab</h2>
+          <p>A compact interactive companion to the separate Mixed Volume Approximations project. Compare an exact cube formula with independent Monte Carlo sampling, without installing software.</p>
+        </div>
+        <a class="outline" href="https://github.com/Souravfrp/estimates-of-mixed-volume-components" target="_blank" rel="noopener noreferrer">Full Python/C++ research ↗</a>
+      </div>
+      <div class="run-clarification">
+        <strong>Different geometry and a different estimator.</strong>
+        Here the cube is <strong>P = [−1,1]<sup>n</sup></strong> and I examine <strong>P + λB<sub>2</sub><sup>n</sup></strong>.
+        This is not the [−½,½]<sup>n</sup> random-walk cube. The demonstration draws <em>independent</em> points from a bounding box (rejection sampling) and does not execute the original thesis B1/B2/B3 hit-and-run oracles.
+      </div>
+      <div class="mixed-volume-math">
+        <div><strong>Exact reference</strong><p>Vol(P + λB) = Σ<sub>j=0…n</sub> C(n,j) M<sub>j</sub> λ<sup>j</sup></p></div>
+        <div><strong>Cube coefficients</strong><p>M<sub>j</sub> = 2<sup>n−j</sup> κ<sub>j</sub> &nbsp; (κ<sub>j</sub> is the volume of the unit j-ball)</p></div>
+        <div><strong>Monte Carlo experiment</strong><p>Count points in P + λB and in component k; compare their estimated volume and coefficient with the exact values.</p></div>
+      </div>
+      <form id="mv-form" class="filters" autocomplete="off">
+        <label>Dimension n <span class="field-explainer">Integer 1–6; browser demonstration</span>
+          <select id="mv-dimension" name="dimension">
+            <option value="1">1</option><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option>
+          </select>
+        </label>
+        <label>Scaling parameter λ <span class="field-explainer">Real number 0.1–2</span>
+          <input id="mv-lambda" name="lambda" type="number" value="1" min="0.1" max="2" step="any" required>
+        </label>
+        <label>Target component index k <span class="field-explainer">Integer from 0 to n</span>
+          <select id="mv-component" name="component" aria-label="Component index k"></select>
+        </label>
+        <label>Independent samples N <span class="field-explainer">1,000–50,000</span>
+          <input id="mv-samples" name="samples" type="number" value="12000" min="1000" max="50000" step="1" required>
+        </label>
+        <label>Random seed <span class="field-explainer">Unsigned 32-bit integer</span>
+          <input id="mv-seed" name="seed" type="number" value="2026" min="0" max="4294967295" step="1" required>
+        </label>
+        <div class="run-actions">
+          <span class="field-explainer">Try a ready-made configuration</span>
+          <div class="run-presets">
+            <button id="mv-demo-3" type="button" class="outline">n=3, λ=1, k=2</button>
+            <button id="mv-demo-5" type="button" class="outline">n=5, λ=1.5, k=3</button>
+          </div>
+        </div>
+        <div class="run-command">
+          <p class="run-help">The result is an approximate Monte Carlo estimate, not a guaranteed-accuracy oracle.</p>
+          <div class="run-presets">
+            <button id="mv-start" type="submit" class="primary dark-button">Estimate mixed volume →</button>
+            <button id="mv-cancel" type="button" class="outline" disabled>Cancel</button>
+          </div>
+          <p id="mv-status" class="simulation-status" role="status" aria-live="polite">Select the geometry and calculate directly in your browser.</p>
+        </div>
+      </form>
+      <div id="mv-output" hidden>
+        <div class="section-heading">
+          <div><div class="eyebrow dark">NEW INDEPENDENT MONTE CARLO ESTIMATE</div><h2>Cube-and-ball results</h2><p id="mv-experiment-summary"></p></div>
+          <button id="mv-export" type="button" class="outline" disabled>Download numerical results (.csv) ↓</button>
+        </div>
+        <div class="mv-metrics">
+          <div><span>Exact body volume</span><strong id="mv-volume-exact">—</strong></div>
+          <div><span>Estimated body volume</span><strong id="mv-volume-est">—</strong><small>Approx. 95% interval: <span id="mv-volume-range">—</span></small></div>
+          <div><span>Exact coefficient M<sub>k</sub></span><strong id="mv-mixed-exact">—</strong></div>
+          <div><span>Estimated coefficient M<sub>k</sub></span><strong id="mv-mixed-est">—</strong><small>Approx. 95% interval: <span id="mv-mixed-range">—</span></small></div>
+          <div><span>Accepted points</span><strong id="mv-acceptance">—</strong></div>
+          <div><span>Target component samples</span><strong id="mv-target-hits">—</strong></div>
+          <div><span>Browser calculation time</span><strong id="mv-elapsed">—</strong></div>
+        </div>
+        <p id="mv-rare-warning" class="mv-warning" hidden>Few or no points landed in the chosen component. A zero estimate does not mean the exact mixed volume is zero; increase the sample size or adjust λ.</p>
+        <div class="mv-chart-container">
+          <h3>Component probabilities for the rounded cube</h3>
+          <p>Compare the exact geometric component proportions with the proportions among independently sampled accepted points.</p>
+          <canvas id="mv-chart" role="img" aria-label="Paired bar chart comparing exact and sampled component probabilities"></canvas>
+          <div class="mv-legend"><span><i class="mv-exact"></i> Exact probability</span><span><i class="mv-est"></i> Estimated probability</span></div>
+        </div>
+        <div class="table-scroll">
+          <table><thead><tr><th>Component k</th><th>Exact coefficient M<sub>k</sub></th><th>Exact probability</th><th>Observed probability</th><th>Accepted count</th></tr></thead><tbody id="mv-terms"></tbody></table>
+        </div>
+        <p class="footnote"><strong>Interpretation:</strong> Each point is drawn independently and uniformly from the bounding cube [−1−λ,1+λ]<sup>n</sup>. A point belongs to P+λB when its Euclidean distance to P is at most λ; its component index counts coordinates outside [−1,1]. The reported intervals are approximate Wilson binomial intervals rescaled to volumes/coefficient estimates, valid as a sampling uncertainty guide for this independent-sample model only. Rare components and high dimensions can make this simple rejection scheme inefficient. It is <strong>not</strong> B1/B2/B3, a proof of a polynomial-time algorithm, or a controlled Python/C++ benchmark.</p>
+      </div>
+    </section>
+    <div class="section-gap"></div>
 
     <section class="two-cols">
       <article class="article-card">
