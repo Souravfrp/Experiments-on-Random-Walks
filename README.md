@@ -77,6 +77,14 @@ For the full \(n=20\) comparison, replace those values with `--dimensions 20 --s
 
 For the notebook interface, launch `python -m notebook` and open `notebooks/01_full_python_cpp_study.ipynb`. The notebook runs genuine C++ executable code through a Python-driven command; it does not simulate C++ algorithms inside Python. The notebook's configuration cell selects the experiment parameters.
 
+## Run a fresh experiment on the research website
+
+I also provide a [browser experiment runner](https://souravfrp.github.io/Experiments-on-Random-Walks/#run-experiment) for readers who want to choose their own dimension, number of steps, chains and seed and immediately see computed results without installing the Python/C++ code. The site runs all five cube transition rules (or one selected walk) **locally in JavaScript**, displaying empirical convergence curves, endpoint projections, acceptance information and an exportable CSV.
+
+The browser engine is an **independent implementation** of the mathematical proposals and acceptance corrections; it does **not** execute my native Python/C++ executables. Its random-number generator and elapsed-time measurements are also different, so I do not treat its results as direct Python-versus-C++ performance evidence. Browser limits (currently n ≤ 30 and a bounded work budget) are practical safeguards, not restrictions of the mathematical algorithms.
+
+The public site thus has **two separate functions**: (1) compute a *new* result locally from visitor-chosen parameters, and (2) search *previously published* results from my curated research archive. The latter can only show parameters represented in the recorded data and never fabricates a missing measurement. Neither function automatically collects the visitor's experiment. I document the implementation details and the limits of its mathematical interpretation in [browser experiment notes](docs/09_BROWSER_EXPERIMENTS.md).
+
 ## Search the public experiment archive
 
 I maintain a [searchable public experiment index](https://souravfrp.github.io/Experiments-on-Random-Walks/) for the compact summaries I have reviewed and published. It supports filtering by dimension, walk, Python or C++, explicit or optimized implementation, source, step budget, number of chains and seed. Filtered records can be exported as CSV. The page is read-only: neither running a local experiment nor opening the page uploads anyone's data.

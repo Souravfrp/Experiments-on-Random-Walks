@@ -18,6 +18,13 @@ jobs:
         run: |
           python tools/build_public_index.py
           python tools/build_public_index.py --check
+      - name: Check browser JavaScript syntax
+        run: |
+          node --check site/app.js
+          node --check site/playground.js
+          node --check site/sim_worker.js
+      - name: Run browser experiment smoke tests
+        run: node tests/browser_sim_smoke.cjs
       - name: Run method checks
         run: python -m unittest discover -s tests -v
       - name: Compile explicit C++17 implementation

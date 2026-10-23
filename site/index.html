@@ -7,6 +7,7 @@
   <title>Experiment archive · Random Walks</title>
   <link rel="stylesheet" href="./style.css">
   <script src="./app.js" defer></script>
+  <script src="./playground.js" defer></script>
 </head>
 <body>
   <a class="skip" href="#results">Skip to results</a>
@@ -14,8 +15,9 @@
     <div class="wrap">
       <div class="eyebrow">COMPUTATIONAL CONVEX GEOMETRY <span class="dot">·</span> EXPERIMENT ARCHIVE</div>
       <h1>Experiments on <em>Random Walks</em></h1>
-      <p class="lead">From explicit transition rules to faster Python and C++ implementations. Explore curated evidence across dimensions, numerical diagnostics and execution environments.</p>
+      <p class="lead">From explicit transition rules to faster Python and C++ implementations. Run an experiment in your browser or inspect curated evidence across dimensions.</p>
       <div class="hero-actions">
+        <a class="primary" href="#run-experiment">Run an experiment ↓</a>
         <a class="primary" href="https://github.com/Souravfrp/Experiments-on-Random-Walks">View source on GitHub ↗</a>
         <a class="secondary" href="https://github.com/Souravfrp/Experiments-on-Random-Walks/blob/main/docs/02_MEASUREMENT_AND_LIMITATIONS.md">Measurement protocol ↗</a>
       </div>
@@ -35,19 +37,105 @@
       <div class="stat"><span>Research stages</span><strong>2</strong><small>Explicit / optimized</small></div>
     </section>
 
+    <section id="run-experiment" class="results-panel playground">
+      <div class="section-heading">
+        <div>
+          <div class="eyebrow dark">RUN A NEW EXPERIMENT · NO INSTALLATION</div>
+          <h2>Choose parameters. See the mathematics.</h2>
+          <p>Run any of the five random walks directly in your browser. Enter your parameters, then view empirical diagnostics and endpoint plots immediately. A quick example is ready below.</p>
+        </div>
+        <a class="outline" href="#results">Browse saved experiments ↓</a>
+      </div>
+
+      <div class="run-clarification">
+        <strong>Live calculations, not a database lookup.</strong>
+        These new results are computed locally using a separately implemented JavaScript version of the cube transition rules. They are <em>not</em> native Python/C++ runtime benchmarks. Nothing is uploaded or saved to the public research archive automatically.
+      </div>
+
+      <form id="run-form" class="filters" autocomplete="off">
+        <label>Dimension n <span class="field-explainer">Integer 1–30</span>
+          <input id="run-dimension" name="n" type="number" min="1" max="30" step="1" value="3" required>
+        </label>
+        <label>Random walk
+          <select id="run-walk" name="walk">
+            <option value="all" selected>Compare all five walks</option>
+            <option value="ball">Ball Walk</option>
+            <option value="dikin">Dikin Walk</option>
+            <option value="coordinate_hit_run">Coordinate Hit-and-Run</option>
+            <option value="random_hit_run">Random Hit-and-Run</option>
+            <option value="john">John's Walk</option>
+          </select>
+        </label>
+        <label>Steps per chain <span class="field-explainer">16–2,048</span>
+          <input id="run-steps" name="steps" type="number" min="16" max="2048" step="1" value="256" required>
+        </label>
+        <label>Independent chains <span class="field-explainer">30–1,000</span>
+          <input id="run-chains" name="chains" type="number" min="30" max="1000" step="1" value="200" required>
+        </label>
+        <label>Random seed <span class="field-explainer">Integer 0–4,294,967,295</span>
+          <input id="run-seed" name="seed" type="number" min="0" max="4294967295" step="1" value="2026" required>
+        </label>
+        <div class="run-actions">
+          <span class="field-explainer">Try a ready-made experiment</span>
+          <div class="run-presets">
+            <button type="button" id="run-example-small" class="outline">Square · n=2</button>
+            <button type="button" id="run-example-higher" class="outline">Higher dimension · n=20</button>
+          </div>
+        </div>
+        <div class="run-command">
+          <p id="run-budget" class="run-help">Computing workload…</p>
+          <div class="run-presets">
+            <button id="run-start" type="submit" class="primary dark-button">Run experiment →</button>
+            <button id="run-cancel" type="button" class="outline" disabled>Cancel</button>
+          </div>
+          <p id="run-status" class="simulation-status" role="status" aria-live="polite">Choose parameters and click Run experiment.</p>
+        </div>
+      </form>
+
+      <div id="live-output" hidden>
+        <div class="section-heading">
+          <div><div class="eyebrow dark">NEWLY COMPUTED RESULTS</div><h2>Your browser experiment</h2>
+            <p id="run-summary"></p></div>
+          <button id="run-export" class="outline" type="button" disabled>Download these numerical results (.csv) ↓</button>
+        </div>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>Walk</th><th>Final KS diagnostic</th><th>Moment relative error</th><th>Empirical checkpoint</th><th>Acceptance</th><th>Browser time (ms)</th><th>Exact TV at final step</th></tr></thead>
+            <tbody id="live-rows"></tbody>
+          </table>
+        </div>
+        <div class="plot-grid">
+          <div class="plot-panel">
+            <div class="plot-heading"><h3>Discrepancy versus steps</h3><span>Lower is better under this diagnostic</span></div>
+            <canvas id="run-curve" role="img" aria-label="Curve showing empirical KS discrepancy for recorded checkpoints"></canvas>
+            <div class="plot-legend"><span class="leg-ball">Ball Walk</span><span class="leg-dikin">Dikin Walk</span><span class="leg-coordinate">Coordinate Hit-and-Run</span><span class="leg-random">Random Hit-and-Run</span><span class="leg-john">John's Walk</span></div>
+          </div>
+          <div class="plot-panel">
+            <div class="plot-heading"><h3>Endpoint distribution</h3>
+              <select id="run-display-walk" aria-label="Choose which random walk to visualize"></select></div>
+            <canvas id="run-spread" role="img" aria-label="Projected endpoint distribution from independent chains"></canvas>
+            <p class="footnote">For n=1: first-coordinate histogram. For n≥2: first two coordinates only, not the full joint distribution.</p>
+          </div>
+        </div>
+        <p class="footnote"><strong>Mathematical interpretation:</strong> The checkpoint criterion combines marginal/pairwise-sum KS ≤ 0.15 and relative second-moment error ≤ 0.25 at two consecutive recorded checkpoints. A missing checkpoint means the criterion was not reached on this observation grid. Exact total variation is shown only for Coordinate Hit-and-Run, using the coupon-collector identity. Browser elapsed time includes transition and diagnostic work and is not a controlled programming-language benchmark.</p>
+      </div>
+    </section>
+
+    <div class="section-gap"></div>
+
     <section id="results" class="results-panel">
       <div class="section-heading">
         <div>
           <div class="eyebrow dark">CURATED HISTORICAL INDEX</div>
           <h2>Search the experiments</h2>
-          <p>Choose the dimensions and methods of interest. Values labelled unknown are not inferred from incomplete records.</p>
+          <p>These controls filter previously published results only. Dropdowns show values known to exist in the archive. To calculate with new parameters, use <a href="#run-experiment">Run an experiment</a> above.</p>
         </div>
         <button id="download" class="outline" type="button">Export filtered CSV ↓</button>
       </div>
 
       <form id="filters" class="filters" autocomplete="off">
-        <label>Dimension n
-          <input id="dimension" type="number" min="1" step="1" placeholder="Any positive integer">
+        <label>Recorded dimension n
+          <select id="dimension"><option value="">All documented dimensions</option></select>
         </label>
         <label>Walk
           <select id="walk">
@@ -68,14 +156,14 @@
         <label>Data source
           <select id="source"><option value="">All labelled sources</option><option value="mac_dimension_sweep">Mac dimension sweep</option><option value="mac_n20">Mac n=20 timings</option><option value="development_dimension_pilot">Development pilot</option><option value="development_n20">Development n=20</option></select>
         </label>
-        <label>Step budget
-          <input id="steps" type="number" min="1" step="1" placeholder="Any / unknown">
+        <label>Step budget (recorded)
+          <select id="steps"><option value="">Any / not specified</option></select>
         </label>
-        <label>Chains
-          <input id="chains" type="number" min="1" step="1" placeholder="Any / unknown">
+        <label>Chains (recorded)
+          <select id="chains"><option value="">Any / not specified</option></select>
         </label>
-        <label>Seed
-          <input id="seed" type="number" min="0" step="1" placeholder="Any / unknown">
+        <label>Seed (recorded)
+          <select id="seed"><option value="">Any / not specified</option></select>
         </label>
       </form>
 
