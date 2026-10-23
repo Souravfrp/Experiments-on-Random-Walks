@@ -28,7 +28,7 @@ The five walks are **Ball Walk**, **Dikin Walk**, **Coordinate Hit-and-Run**, **
 
 ## Results at a glance — dimensions 1 to 10
 
-I first investigated how the five transition rules behave as the cube dimension varies from \\(n=1\\) to \\(n=10\\). The following plots present the **original, explicit Python and C++17 implementations**, before NumPy batching and C++ parallel optimization. They reproduce the dimension-sweep observations reported from my Mac Jupyter experiments (2,560-step budget, 3,000 chains, one seed: 2026). Values were transcribed from the saved screenshots; they are not a fresh controlled rerun.
+I first investigated how the five transition rules behave as the cube dimension varies from $n=1$ to $n=10$. The following plots present the **original, explicit Python and C++17 implementations**, before NumPy batching and C++ parallel optimization. They reproduce the dimension-sweep observations reported from my Mac Jupyter experiments (2,560-step budget, 3,000 chains, one seed: 2026). Values were transcribed from the saved screenshots; they are not a fresh controlled rerun.
 
 ### 1. Empirical convergence checkpoints
 
@@ -40,7 +40,7 @@ The vertical axes are logarithmic. Random Hit-and-Run often reaches the chosen *
 
 ![Two-panel logarithmic line graphs of estimated computation cost to the recorded empirical threshold for five walks across dimensions 1 through 10 in original Python and C++.](figures/dimension_study/n1_to_n10_cost_python_cpp.svg)
 
-I estimate the elapsed transition cost to each recorded checkpoint as \\(3000 \\times t_{\\mathrm{checkpoint}} \\times c_{\\mathrm{transition}}/10^6\\) seconds, where \\(c_{\\mathrm{transition}}\\) is the measured microseconds per simulated transition. **The two panels use different vertical scales**; this is an estimate rather than a separately timed truncated run. For most dimensions, Coordinate Hit-and-Run has the smallest estimated cost even when Random Hit-and-Run has a smaller empirical checkpoint.
+I estimate the elapsed transition cost to each recorded checkpoint as $3000 \times t_{\mathrm{checkpoint}} \times c_{\mathrm{transition}}/10^6$ seconds, where $c_{\mathrm{transition}}$ is the measured microseconds per simulated transition. **The two panels use different vertical scales**; this is an estimate rather than a separately timed truncated run. For most dimensions, Coordinate Hit-and-Run has the smallest estimated cost even when Random Hit-and-Run has a smaller empirical checkpoint.
 
 [Source data for these figures](results/reported_mac_results/n1_to_n10_transcribed.csv) · [Detailed measurement caveats](docs/02_MEASUREMENT_AND_LIMITATIONS.md) · [Optimized versus explicit Mac timings at n=20](docs/08_MAC_PERFORMANCE_NOTES.md)
 
@@ -51,9 +51,9 @@ These are selected **development-environment examples**, not the same raw Mac ru
 | Two-dimensional density | Three-dimensional endpoint clouds | Higher-dimensional coordinate projections |
 |:--:|:--:|:--:|
 | ![Density comparison for walks in the square.](figures/examples/02_n2_density.png) | ![Three-dimensional sampled point clouds.](figures/examples/03_n3_clouds.png) | ![Selected coordinate projections of walks in dimension ten.](figures/examples/04_n10_projections.png) |
-| \\(n=2\\) | \\(n=3\\) | \\(n=10\\) |
+| $n=2$ | $n=3$ | $n=10$ |
 
-The optimized study is a separate stage: its code and curated \\(n=20\\) example are retained in the repository, while the runners accept arbitrary positive integer dimensions subject to computational resources.
+The optimized study is a separate stage: its code and curated $n=20$ example are retained in the repository, while the runners accept arbitrary positive integer dimensions subject to computational resources.
 
 ## Run an optimized experiment — both languages, one command
 
