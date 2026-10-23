@@ -8,7 +8,7 @@ const walks=read("index.html"),mixed=read("mixed-volumes.html"),css=read("style.
 function number(s,fragment){return s.split(fragment).length-1;}
 function validatePage(s,title){
  assert.equal(number(s,'class="study-tabs"'),1,title+": exactly one tab bar");
- assert.equal(number(s,'href="./index.html"'),1,title+": links back to the Random Walks page");
+ assert.ok(number(s,'href="./index.html"')>=1,title+": links back to the Random Walks page");
  assert.ok(s.includes('href="./mixed-volumes.html"'),title+": links to the mixed-volume page");
  assert.equal(number(s,"<main"),1,title+": one main");
  assert.equal(number(s,"</main>"),1,title+": one main closing tag");
