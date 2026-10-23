@@ -55,3 +55,13 @@
 .mv-legend .mv-exact{background:#2f7167}.mv-legend .mv-est{background:#9db2dd}
 @media(max-width:900px){.mixed-volume-math{grid-template-columns:1fr}.mv-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:580px){.mixed-volume-math,.mv-metrics,.mv-chart-container{padding:16px}.mv-metrics{gap:9px}.mv-metrics>div{padding:12px}.mv-metrics strong{font-size:17px}}
+
+/* Two separate public study pages in a shared Computational Convex Geometry archive. */
+.study-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:26px 0 8px}
+.study-tabs a{display:flex;align-items:center;justify-content:center;gap:8px;border-radius:10px;padding:18px 14px;text-align:center;background:#fff;border:1px solid #ceddd4;color:#31594c;text-decoration:none;font-weight:700;font-size:14px;line-height:1.45;scroll-margin-top:20px}
+.study-tabs a:hover,.study-tabs a:focus-visible{background:#eff8f2;border-color:#4c8c78;text-decoration:underline;text-underline-offset:4px}
+.study-tabs a[aria-current="page"]{background:#19574c;border-color:#19574c;color:white;box-shadow:0 3px 12px #154b4222}
+.other-study-link{margin:30px 0;padding:20px 24px;background:#e9f1e8;border:1px solid #d6e6d9;border-radius:10px;display:flex;align-items:center;justify-content:space-between;gap:15px}
+.other-study-link span{font-size:11px;letter-spacing:.1em;color:#526c60;font-weight:750}
+.other-study-link a{color:#164a40;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+@media(max-width:580px){.study-tabs{gap:7px;margin:16px 0 8px}.study-tabs a{padding:12px 10px;font-size:12px}.other-study-link{display:block;padding:18px}.other-study-link a{display:block;margin-top:9px}}
