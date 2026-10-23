@@ -85,6 +85,12 @@ The browser engine is an **independent implementation** of the mathematical prop
 
 The public site thus has **two separate functions**: (1) compute a *new* result locally from visitor-chosen parameters, and (2) search *previously published* results from my curated research archive. The latter can only show parameters represented in the recorded data and never fabricates a missing measurement. Neither function automatically collects the visitor's experiment. I document the implementation details and the limits of its mathematical interpretation in [browser experiment notes](docs/09_BROWSER_EXPERIMENTS.md).
 
+## Related demonstration: mixed-volume approximation
+
+I have added a separate [Mixed Volume Approximation Lab](https://souravfrp.github.io/Experiments-on-Random-Walks/#mixed-volume-lab) to the interactive research website. It connects to my distinct [Mixed Volume Approximations repository](https://github.com/Souravfrp/estimates-of-mixed-volume-components) and the numerical questions in my master's thesis.
+
+The browser demonstration uses the **side-length-2 cube** $P=[-1,1]^n$ and the rounded body $P+\lambda B_2^n$, not the side-length-1 random-walk cube. It uses independent bounding-box Monte Carlo draws to estimate the volume and a selected mixed-volume component; visitors can compare those estimates with the **exact cube reference coefficients**, inspect component probabilities and download the numerical table. This limited calculation is **not** the original B1/B2/B3 hit-and-run oracle system or Algorithm 1–3, and it does not inherit that framework's theoretical guarantees. The [methods and limitations](docs/10_MIXED_VOLUME_BROWSER_LAB.md) spell out the sampling scheme and comparison.
+
 ## Search the public experiment archive
 
 I maintain a [searchable public experiment index](https://souravfrp.github.io/Experiments-on-Random-Walks/) for the compact summaries I have reviewed and published. It supports filtering by dimension, walk, Python or C++, explicit or optimized implementation, source, step budget, number of chains and seed. Filtered records can be exported as CSV. The page is read-only: neither running a local experiment nor opening the page uploads anyone's data.
