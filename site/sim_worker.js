@@ -196,7 +196,7 @@ function run(p) {
   const selected=p.walk==="all"?WALKS:[p.walk], results=[];
   for(let w=0; w<selected.length; w++) {
     const walk=selected[w];
-    const rng=generator((p.seed + Math.imul(0x9e3779b9,w+1))>>>0);
+    const rng=generator((p.seed + Math.imul(0x9e3779b9,WALKS.indexOf(walk)+1))>>>0);
     const states=new Float64Array(p.chains*p.n), u=new Float64Array(p.n), y=new Float64Array(p.n);
     const checkpoints=[], clock=performance.now();
     let accepted=0, previousPass=false, proxy=null, elapsed=0;
