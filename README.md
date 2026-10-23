@@ -4,9 +4,9 @@
 
 I study five random walks on the centred cube
 
-\[
+$$
 K_n=[-1/2,1/2]^n,\qquad X_0=0,\qquad n\geq1.
-\]
+$$
 
 My starting question is geometric: how does a chain initiated at the origin spread through the cube, and how does its distribution change as the dimension increases? I then distinguish two measures of performance: *the number of Markov transitions required to reach a stated empirical discrepancy criterion* and *the computation spent on those transitions*. These are not interchangeable.
 
@@ -21,8 +21,8 @@ The five walks are **Ball Walk**, **Dikin Walk**, **Coordinate Hit-and-Run**, **
 
 ## The questions I investigate
 
-1. For fixed dimension \(n\), how do the five distributions evolve from the same starting point? What do their densities, projected point clouds, and discrepancy curves show?
-2. As \(n\) changes, how do the recorded empirical convergence checkpoints and computational costs change?
+1. For fixed dimension $n$, how do the five distributions evolve from the same starting point? What do their densities, projected point clouds, and discrepancy curves show?
+2. As $n$ changes, how do the recorded empirical convergence checkpoints and computational costs change?
 3. For each sampling rule, what computational changes are obtained when I use NumPy batching in Python or memory reuse / optional parallelism in C++?
 4. How much information do the chosen empirical diagnostics lose? Coordinate Hit-and-Run gives an exact total-variation reference against which I can test the reported proxy checkpoints.
 
@@ -73,7 +73,7 @@ To run **both research stages** (explicit and optimized, Python and C++) with ma
 python run_both_versions.py --dimensions 2,3,5 --steps 128 --chains 300 --seed 2026 --threads 1
 ```
 
-For the full \(n=20\) comparison, replace those values with `--dimensions 20 --steps 2560 --chains 3000`; the explicit Python implementation is substantially slower. Use `--threads 1` to compare C++ single-thread results, and repeat the optimized run with `--threads 4` when studying throughput from multicore execution. The original is not a maximum-performance Python benchmark.
+For the full $n=20$ comparison, replace those values with `--dimensions 20 --steps 2560 --chains 3000`; the explicit Python implementation is substantially slower. Use `--threads 1` to compare C++ single-thread results, and repeat the optimized run with `--threads 4` when studying throughput from multicore execution. The original is not a maximum-performance Python benchmark.
 
 For the notebook interface, launch `python -m notebook` and open `notebooks/01_full_python_cpp_study.ipynb`. The notebook runs genuine C++ executable code through a Python-driven command; it does not simulate C++ algorithms inside Python. The notebook's configuration cell selects the experiment parameters.
 
@@ -105,12 +105,12 @@ Every empirical result should be interpreted with its seed, number of chains, ob
 
 ## How to read the figures
 
-- \(n=1\): histogram on the interval;
-- \(n=2\): square point clouds and 2D density;
-- \(n=3\): 3D trajectories or cloud of independent endpoints;
-- \(n\geq4\): coordinate-plane projections such as \((x_1,x_2)\), \((x_2,x_3)\), and \((x_3,x_1)\).
+- $n=1$: histogram on the interval;
+- $n=2$: square point clouds and 2D density;
+- $n=3$: 3D trajectories or cloud of independent endpoints;
+- $n\geq4$: coordinate-plane projections such as $(x_1,x_2)$, $(x_2,x_3)$, and $(x_3,x_1)$.
 
-A projection is not the full \(n\)-dimensional distribution. Multiple diagnostics and the exact Coordinate Hit-and-Run benchmark are needed to assess how much a projection can conceal.
+A projection is not the full $n$-dimensional distribution. Multiple diagnostics and the exact Coordinate Hit-and-Run benchmark are needed to assess how much a projection can conceal.
 
 ## Repository layout
 
@@ -151,7 +151,7 @@ I keep this account at the end so that the mathematical experiment remains the f
 
 **C++.** The explicit version uses the C++17 standard library and clear vector operations. The optimized version retains scratch vectors in per-worker workspaces and avoids repeated allocations. It gives independent chains reproducible streams and can assign different chains to different threads. The optimized compiler command uses `-O3`; the baseline uses `-O2`. A claim that *memory reuse alone* caused the full speedup would therefore be unjustified unless the compiler and thread conditions were controlled.
 
-**Observed Mac timings.** For the \(n=20\), 2,560-step, 3,000-chain experiment, the previously reported total times per walk and the optimized times are tabulated in [Mac execution notes](docs/08_MAC_PERFORMANCE_NOTES.md). These were taken from separately executed runs on the same machine, not a randomized repeated benchmark. They show large practical improvements, but the optimized C++ timing includes four threads and the change from `-O2` to `-O3`. The complete optimization discussion, including cases without speedup, is in [optimization changes](docs/03_OPTIMIZATION_CHANGES.md).
+**Observed Mac timings.** For the $n=20$, 2,560-step, 3,000-chain experiment, the previously reported total times per walk and the optimized times are tabulated in [Mac execution notes](docs/08_MAC_PERFORMANCE_NOTES.md). These were taken from separately executed runs on the same machine, not a randomized repeated benchmark. They show large practical improvements, but the optimized C++ timing includes four threads and the change from `-O2` to `-O3`. The complete optimization discussion, including cases without speedup, is in [optimization changes](docs/03_OPTIMIZATION_CHANGES.md).
 
 **Interpretation.** Faster execution need not imply fewer mixing steps. For the present thresholds, Random Hit-and-Run often has the earliest *empirical* checkpoint; Coordinate Hit-and-Run often has the lowest measured transition cost. Neither observation constitutes a universal mixing-time theorem. Future work should use more repetitions, verified kernel equivalence and stronger joint-distribution diagnostics.
 
