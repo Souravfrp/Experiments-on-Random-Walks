@@ -10,7 +10,7 @@
   function setBusy(b){$("mv-start").disabled=b;$("mv-cancel").disabled=!b;$("mv-export").disabled=b||!latest;}
   function configureK(){
     const n=Number($("mv-dimension").value),select=$("mv-component");
-    const old=Number(select.value);
+    const old=select.value===""?Math.min(n,2):Number(select.value);
     select.replaceChildren();
     for(let j=0;j<=n;j++){
       const opt=document.createElement("option");opt.value=String(j);
