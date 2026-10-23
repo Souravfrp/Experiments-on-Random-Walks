@@ -26,7 +26,7 @@ approx(r.estimatedMixedVolume,2*Math.PI,.3,"Large-sample coefficient estimator")
 assert.equal(r.counts.reduce((s,c)=>s+c,0),r.inside);
 assert.ok(r.volumeInterval[0] <= r.volumeEstimate && r.volumeInterval[1] >= r.volumeEstimate);
 assert.ok(r.coefficientInterval[0] <= r.estimatedMixedVolume && r.coefficientInterval[1] >= r.estimatedMixedVolume);
-const b=run(p);assert.deepEqual(b.result.counts,r.counts,"Same inputs and seed produce the same counts");
+const b=run(p);assert.deepEqual(Array.from(b.result.counts),Array.from(r.counts),"Same inputs and seed produce the same counts");
 const n1=run({n:1,lambda:1,samples:1000,seed:1,k:1}).result;
 approx(n1.exactVolume,4,1e-12,"One-dimensional rounded interval volume");
 approx(n1.components[0].mixedVolume,2,1e-12,"One-dimensional M0");
