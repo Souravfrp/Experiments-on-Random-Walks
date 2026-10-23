@@ -29,6 +29,8 @@ jobs:
         run: node tests/browser_sim_smoke.cjs
       - name: Run mixed-volume browser smoke tests
         run: node tests/mixed_volume_browser_smoke.cjs
+      - name: Check independent public experiment pages
+        run: node tests/site_pages_smoke.cjs
       - name: Run method checks
         run: python -m unittest discover -s tests -v
       - name: Compile explicit C++17 implementation
