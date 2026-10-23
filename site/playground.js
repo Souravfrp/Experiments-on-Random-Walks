@@ -183,7 +183,7 @@
       $("run-dimension").value="2";$("run-steps").value="128";$("run-chains").value="200";$("run-seed").value="2026";$("run-walk").value="all";describeWork();
     });
     $("run-example-higher").addEventListener("click",()=>{
-      $("run-dimension").value="20";$("run-steps").value="512";$("run-chains").value="200";$("run-seed").value="2026";$("run-walk").value="all";describeWork();
+      $("run-dimension").value="20";$("run-steps").value="256";$("run-chains").value="150";$("run-seed").value="2026";$("run-walk").value="all";describeWork();
     });
     $("run-cancel").addEventListener("click",()=>{
       if(worker)worker.terminate();worker=null;busy(false);
