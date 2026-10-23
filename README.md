@@ -48,6 +48,12 @@ For the full \(n=20\) comparison, replace those values with `--dimensions 20 --s
 
 For the notebook interface, launch `python -m notebook` and open `notebooks/01_full_python_cpp_study.ipynb`. The notebook runs genuine C++ executable code through a Python-driven command; it does not simulate C++ algorithms inside Python. The notebook's configuration cell selects the experiment parameters.
 
+## Search the public experiment archive
+
+I maintain a [searchable public experiment index](https://souravfrp.github.io/Experiments-on-Random-Walks/) for the compact summaries I have reviewed and published. It supports filtering by dimension, walk, Python or C++, explicit or optimized implementation, source, step budget, number of chains and seed. Filtered records can be exported as CSV. The page is read-only: neither running a local experiment nor opening the page uploads anyone's data.
+
+The dashboard uses source-labelled records drawn from the published CSVs. Mac screenshot/Terminal transcriptions are separated from development-environment measurements. Where parameters are unknown, I leave them unknown rather than inferring them; an empirical checkpoint is not the total-variation mixing time. I regenerate the index with `python tools/build_public_index.py`, and GitHub Pages rebuilds it from those CSVs at publication. GitHub Pages must be enabled once in repository Settings to make the page available. See [the archive methodology](docs/07_EXPERIMENT_ARCHIVE.md) and [optimization notes](docs/03_OPTIMIZATION_CHANGES.md).
+
 ## Archive and results
 
 Each optimized run writes `runs/<timestamp>_<id>/parameters.json`, per-language `checkpoints.csv` and `runtime.csv`, selected `snapshots.csv`, `tables/combined_results.csv`, summary matrices, figures, and completion status. `runs/` is ignored by Git because large generated outputs should not accumulate in ordinary commit history. A researcher can choose to publish **selected small summaries**, not every coordinate of every trajectory.

@@ -21,3 +21,14 @@ Large raw samples and all generated figures remain outside ordinary Git history.
 - Source of the record (`generated locally`, `developer example`, or `transcribed user observation`)
 
 I do not merge example timings from different machines into one benchmark series.
+
+
+## Public search interface
+
+I expose the reviewed history in a read-only static website generated from the compact CSV files already included in this repository. The filtering keys are dimension, walk, language, implementation stage, source, step budget, chain count and seed. Exported rows retain source-file references and notes. I preserve unknown metadata as unknown and do not treat a development pilot as a head-to-head Mac benchmark.
+
+The build script is `python tools/build_public_index.py`. It writes `site/data/experiments.json` from committed, source-labelled CSVs; `--check` verifies that output. My GitHub Pages workflow runs the generator at deploy time. New sources should be added through a reviewed change to the builder and source data, rather than manual editing of generated JSON. The index may lag a local computation until its selected results are reviewed and committed.
+
+For local inspection, I can run `python tools/build_public_index.py` and `python -m http.server 8000 --directory site`, then visit `http://localhost:8000`. Browsers generally block loading JSON from a `file://` URL, so I use the local server instead of double-clicking the HTML file.
+
+A static archive is not a remotely hosted experiment executor. To reproduce a listed run, researchers use the Python/C++ command-line runners and inspect the linked source data. The published summary index cannot establish asymptotic complexity, rigorous total-variation estimates, or statistical confidence intervals without a suitable mathematical argument and repeated experiments.
